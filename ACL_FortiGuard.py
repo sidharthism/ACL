@@ -1,7 +1,7 @@
 '''
 Address Category Listing using FortiGuard Web Filter Lookup
 Author : Sidharth S - @sidharthism - https://github.com/sidharthism
-v1.0.0
+v1.0.1
 '''
 
 import requests
@@ -16,9 +16,10 @@ cat_file = "categories-"+ dt_string +".csv"
 serviceurl = "https://fortiguard.com/webfilter?"
 args = dict()
 count = 0
+notFound = list()
 
 try:
-    fh_addr = open("addresses.txt")   
+    fh_addr = open("addresses.txt")
 except:   
     print("\nCould not open addresses.txt\n")
     print("Trying to create addresses.txt")
@@ -28,16 +29,19 @@ except:
         fh_addr = open("addresses.txt")
     except:
         print("\nCould not create addresses.txt\n")
+        input("Press any key to exit...")
         exit()
 if len(fh_addr.read()) == 0:
     print("\nAdd addresses to addresses.txt\n")
+    input("Press any key to exit...")
     exit()
 else:
     fh_addr.seek(0)
 try:   
     fh_cat = open(cat_file,"w")
 except:
-    print("Could not create output file...")
+    print("\nCould not create output file...\n")
+    input("Press any key to exit...")
     exit()    
 
 for address in fh_addr:
@@ -54,6 +58,7 @@ for address in fh_addr:
         except:
             category = None
             print("Category not found!", args['q'])
+            notFound.append(args['q'])
         if category is not None:
             count += 1
             cat = category[category.index(':')+1:].strip()
@@ -70,4 +75,21 @@ for address in fh_addr:
         
 fh_cat.close()
 fh_addr.close()
-print("Retrieval of",count,"addresses Successful...\nWritten to",cat_file)
+
+if notFound:
+    try:
+        nF_file = "addressesNotFound-"+ dt_string +".txt"
+        nF = open(nF_file,"w")
+    except:
+        pass 
+    print("\nThe category of following address are NOT FOUND\n")
+    for s in notFound:
+        print(s)
+        if nF:
+            nF.write(s+"\n")
+    if nF:
+        nF.close()
+        print("\nThe addresses whose category are NOT FOUND is written to",nF_file,"\n")
+
+print("\nCategory retrieval of",count,"addresses Successful...\nWritten to",cat_file,"\n")
+input("Press any key to exit...")
