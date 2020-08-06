@@ -6,7 +6,7 @@ v1.0.0
 
 BeautifulSoup^4.0.0
 
-============================= Usage ===============================
+============================ Usage ==============================
 
 Add the addresses to address.txt (The program will automatically create one if the file doesn't exist. You can then add the addresses.)
 
