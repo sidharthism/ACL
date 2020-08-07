@@ -81,7 +81,7 @@ if notFound:
         nF_file = "addressesNotFound-"+ dt_string +".txt"
         nF = open(nF_file,"w")
     except:
-        pass 
+        nF = False 
     print("\nThe category of following address are NOT FOUND\n")
     for s in notFound:
         print(s)
