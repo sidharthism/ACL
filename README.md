@@ -2,7 +2,7 @@ Address Category Listing using FortiGuard Web Filter Lookup
 <br>
 Author : Sidharth S - @sidharthism - https://github.com/sidharthism/ACL
 <br>
-v1.0.0
+v1.0.1
 
 ========================== Requirements ===========================
 
